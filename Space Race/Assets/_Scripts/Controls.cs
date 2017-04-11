@@ -10,12 +10,31 @@ public class Controls : MonoBehaviour
     Vector3 VerticalRot;
     Vector3 HorizontalRot;
 
+    public Shield item;
+    public Motion shipMotion;
+
     void Start()
     {
         VerticalRot = new Vector3(30, 0, 0);
-        HorizontalRot = new Vector3(0, 60, -30);
+        HorizontalRot = new Vector3(0, 60, 0);
     }
 
+    void Update()
+    {
+        HorizontalTilt = Input.GetAxis("Horizontal");
+        VerticalTilt = Input.GetAxis("Vertical");
+
+        if(Input.GetKey(KeyCode.Space))
+        {
+            shipMotion.ApplyMotion(true);
+        }
+        else
+        {
+            shipMotion.ApplyMotion(false);
+        }
+    }
+
+    /*
     void FixedUpdate()
     {
         FixedTime = Time.fixedDeltaTime;
@@ -31,6 +50,18 @@ public class Controls : MonoBehaviour
         else if (VerticalTilt < 0)
         {
             this.transform.Rotate(-VerticalRot * FixedTime);
+        }
+
+        if (VerticalTilt == 0 && HorizontalTilt == 0)
+        {
+            if (this.transform.rotation.x > 0)
+            {
+                this.transform.Rotate(-VerticalRot * FixedTime);
+            }
+            else if(this.transform.rotation.x < 0)
+            {
+                this.transform.Rotate(VerticalRot * FixedTime);
+            }
         }
 
         // Left and Right movement
@@ -49,4 +80,5 @@ public class Controls : MonoBehaviour
             this.transform.Translate(Vector3.forward * 20 * FixedTime);
         }
     }
+    */
 }

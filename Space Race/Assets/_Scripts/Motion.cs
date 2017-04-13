@@ -5,23 +5,29 @@ using UnityEngine;
 public class Motion : MonoBehaviour
 {
     [SerializeField]
-    private float Acceleration;
+    private float Acceleration;     // how fast the ship speeds up
     [SerializeField]
-    private float TurnSpeed;
-    private float CurrentSpeed;
-    private float MaxSpeed;
+    private float TurnSpeed;        // how quickly the ship rotates
+    [SerializeField]
+    private float MaxSpeed;         // the maximum speed the ship can go
+
+    private float CurrentSpeed;     // the current speed of the ship
     private float FixedTime;
+
+    private Vector3 HorizontalRot, VerticalRot;
 
     private bool ApplySpeed, ApplyBoost;
 
 	void Start () {
         CurrentSpeed = 0;
         MaxSpeed = 30;
+        HorizontalRot = Vector3.zero;
+        VerticalRot = Vector3.zero;
 	}
 	
-    void Update()
+    void FixedUpdate()
     {
-        FixedTime = Time.deltaTime;
+        FixedTime = Time.fixedDeltaTime;
 
         if(ApplySpeed)
         {
@@ -43,7 +49,12 @@ public class Motion : MonoBehaviour
             }
         }
 
+        // applies the speed in the forward direction
         this.transform.Translate(Vector3.forward * CurrentSpeed * FixedTime);
+        // applies left/right turning
+        this.transform.RotateAround(this.transform.position, HorizontalRot, TurnSpeed * FixedTime);
+        // applies upward/downward turning
+        this.transform.Rotate(VerticalRot, TurnSpeed * FixedTime);
     }
 
     void TurningControls()
@@ -58,13 +69,13 @@ public class Motion : MonoBehaviour
         ApplySpeed = move;
     }
 
-    public void ApplyTurn()
+    public void ApplyTurn(Vector3 Horizontal)
     {
-
+        HorizontalRot = Horizontal;
     }
 
-    public void ApplyRotation()
+    public void ApplyRotation(Vector3 Vertical)
     {
-
+        VerticalRot = Vertical;
     }
 }

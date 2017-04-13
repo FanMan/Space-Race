@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/GalaxyMap.unity
+- path: Assets/_Scenes/Test Scene.unity
   isLoaded: 1
   isActive: 1

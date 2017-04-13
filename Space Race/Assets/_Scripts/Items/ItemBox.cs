@@ -27,7 +27,7 @@ public class ItemBox : MonoBehaviour
             print("Player gets item");
             CurrentItem = Items[Random.Range(0, Items.Count)];
             // need to create a public method in the player called RecievedItem
-            ShipObject.GameObject.SendMessage("RecievedItem", CurrentItem);
+            //ShipObject.GameObject.SendMessage("RecievedItem", CurrentItem);
         }
     }
 
@@ -36,12 +36,11 @@ public class ItemBox : MonoBehaviour
         return CurrentItem;
     }
 
-    void DisableItem(bool active)
+    void DisableItem()
     {
-        // Disable the Mesh and Trigger only
-       this.BoxCollider.enabled = false;
-       this.MeshRenderer.enabled = false;
-        //CurrentItem.SetActive(active);
+        // Disable the Mesh and Trigger only when the player passes through it
+        this.GetComponent<BoxCollider>().enabled = false;
+        this.GetComponent<MeshRenderer>().enabled = false;
     }
 
     void Visual()

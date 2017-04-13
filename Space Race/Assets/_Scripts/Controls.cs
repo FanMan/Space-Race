@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Controls : MonoBehaviour
 {
-    float HorizontalTilt = 0;
-    float VerticalTilt = 0;
-    float FixedTime = 0;
+    float HorizontalTilt = 0;   // 
+    float VerticalTilt = 0;     // 
+    float FixedTime = 0;        // 
     Vector3 VerticalRot;
     Vector3 HorizontalRot;
 
-    public Shield item;
+    Shield item;
     public Motion shipMotion;
 
     void Start()
@@ -32,6 +32,9 @@ public class Controls : MonoBehaviour
         {
             shipMotion.ApplyMotion(false);
         }
+
+        shipMotion.ApplyTurn(HorizontalTilt * Vector3.up);
+        shipMotion.ApplyRotation(VerticalTilt * Vector3.right);
     }
 
     /*

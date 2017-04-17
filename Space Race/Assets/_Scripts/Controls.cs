@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Controls : MonoBehaviour
+public class Controls : NetworkBehaviour
 {
     float HorizontalTilt = 0;   // 
     float VerticalTilt = 0;     // 
@@ -10,17 +11,24 @@ public class Controls : MonoBehaviour
     Vector3 VerticalRot;
     Vector3 HorizontalRot;
 
-    Shield item;
+    GameObject item;
     public Motion shipMotion;
+    public GameObject ItemPrefab;
+    public GameObject Ship;
+    private bool ItemExists;
 
     void Start()
     {
         VerticalRot = new Vector3(30, 0, 0);
         HorizontalRot = new Vector3(0, 60, 0);
+        ItemExists = false;
     }
 
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         HorizontalTilt = Input.GetAxis("Horizontal");
         VerticalTilt = Input.GetAxis("Vertical");
 
@@ -35,53 +43,22 @@ public class Controls : MonoBehaviour
 
         shipMotion.ApplyTurn(HorizontalTilt * Vector3.up);
         shipMotion.ApplyRotation(VerticalTilt * Vector3.right);
-    }
 
-    /*
-    void FixedUpdate()
+        if(Input.GetKeyDown(KeyCode.Mouse0) && ItemExists)
+        {
+            print("Using item");
+            item = Instantiate(ItemPrefab, this.transform);
+            item.transform.position = this.transform.position;
+            ItemExists = false;
+        }
+        
+    }
+    
+    public void GetItem(GameObject tempItem)
     {
-        FixedTime = Time.fixedDeltaTime;
-
-        HorizontalTilt = Input.GetAxis("Horizontal");
-        VerticalTilt = Input.GetAxis("Vertical");
-
-        // Upwards and Downwards direction
-        if (VerticalTilt > 0)
-        {
-            this.transform.Rotate(VerticalRot * FixedTime);
-        }
-        else if (VerticalTilt < 0)
-        {
-            this.transform.Rotate(-VerticalRot * FixedTime);
-        }
-
-        if (VerticalTilt == 0 && HorizontalTilt == 0)
-        {
-            if (this.transform.rotation.x > 0)
-            {
-                this.transform.Rotate(-VerticalRot * FixedTime);
-            }
-            else if(this.transform.rotation.x < 0)
-            {
-                this.transform.Rotate(VerticalRot * FixedTime);
-            }
-        }
-
-        // Left and Right movement
-        if (HorizontalTilt > 0)
-        {
-            this.transform.Rotate(HorizontalRot * FixedTime);
-        }
-        else if (HorizontalTilt < 0)
-        {
-            this.transform.Rotate(-HorizontalRot * FixedTime);
-        }
-
-        // used to move the rocket forward
-        if (Input.GetKey(KeyCode.Space))
-        {
-            this.transform.Translate(Vector3.forward * 20 * FixedTime);
-        }
+        ItemPrefab = tempItem;
+        ItemExists = true;
+        print("Player has: " + ItemPrefab.ToString());
     }
-    */
+    
 }

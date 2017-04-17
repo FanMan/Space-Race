@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EMP : MonoBehaviour
+public class EMP : Item
 {
 
 	
@@ -30,5 +30,11 @@ public class EMP : MonoBehaviour
             // stop the ship momentarily
 
         }
+    }
+
+    public void ActivateEMP(Vector3 ShipPosition)
+    {
+        print("Player Pos: " + ShipPosition + "; Shield Pos: " + this.transform.position);
+        this.transform.position = ShipPosition;
     }
 }

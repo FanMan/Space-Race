@@ -27,14 +27,14 @@ public class ItemBox : MonoBehaviour
             print("Player gets item");
             CurrentItem = Items[Random.Range(0, Items.Count)];
             // need to create a public method in the player called RecievedItem
-            //ShipObject.GameObject.SendMessage("RecievedItem", CurrentItem);
+            ShipObject.gameObject.SendMessage("GetItem", CurrentItem);
         }
     }
 
-    public GameObject getItem()
+    /*public GameObject getItem()
     {
         return CurrentItem;
-    }
+    }*/
 
     void DisableItem()
     {

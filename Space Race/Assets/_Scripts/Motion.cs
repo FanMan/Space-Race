@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Motion : MonoBehaviour
+public class Motion : NetworkBehaviour
 {
     [SerializeField]
     private float Acceleration;     // how fast the ship speeds up
@@ -27,6 +28,11 @@ public class Motion : MonoBehaviour
 	
     void FixedUpdate()
     {
+        if(!isLocalPlayer)
+        {
+            return;
+        }
+
         FixedTime = Time.fixedDeltaTime;
 
         if(ApplySpeed)
@@ -77,5 +83,10 @@ public class Motion : MonoBehaviour
     public void ApplyRotation(Vector3 Vertical)
     {
         VerticalRot = Vertical;
+    }
+
+    public void StopShip()
+    {
+        CurrentSpeed = 0;
     }
 }

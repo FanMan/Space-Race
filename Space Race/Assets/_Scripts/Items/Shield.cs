@@ -19,21 +19,20 @@ public class Shield : MonoBehaviour
 
     void Update()
     {
-        
+        ActivateShield();
     }
 
-    public void SpawnShield(Vector3 ShipPosition)
+    // activate upon creation
+    public void ActivateShield()
     {
-        SheildObject.transform.position = ShipPosition;
-
         CurrentTime += Time.deltaTime;
-        /*
+        
         if (CurrentTime >= Duration && !objectCollision)
         {
-            DestroyObject(this, 0);
-            print("Object has been destroyed");
+            Destroy(SheildObject);
+            print("Shield has been destroyed");
             // play dissapate explosion
-        }*/
+        }
     }
 
     void OnTriggerEnter(Collider ItemObject)

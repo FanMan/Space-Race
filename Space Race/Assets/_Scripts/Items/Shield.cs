@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Shield : MonoBehaviour
+public class Shield : NetworkBehaviour
 {
     [SerializeField]
     private float Duration;

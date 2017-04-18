@@ -12,8 +12,11 @@ public class Controls : NetworkBehaviour
     Vector3 HorizontalRot;
 
     GameObject item;
+    GameObject ItemPrefab;
+
+
     public Motion shipMotion;
-    public GameObject ItemPrefab;
+    public GameObject ItemSpawnLoc;
     public GameObject Ship;
     private bool ItemExists;
 
@@ -47,8 +50,11 @@ public class Controls : NetworkBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0) && ItemExists)
         {
             print("Using item");
-            item = Instantiate(ItemPrefab, this.transform);
-            item.transform.position = this.transform.position;
+            //item = Instantiate(ItemPrefab, this.transform);
+            //item.transform.position = this.transform.position;
+            //ItemExists = false;
+            item = Instantiate(ItemPrefab, ItemSpawnLoc.transform.position, this.transform.localRotation);
+            //item.transform.position = ItemSpawnLoc.transform.position;
             ItemExists = false;
         }
         

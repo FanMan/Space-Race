@@ -28,10 +28,7 @@ public class Motion : NetworkBehaviour
 	
     void FixedUpdate()
     {
-        if(!isLocalPlayer)
-        {
-            return;
-        }
+        if(!isLocalPlayer) { return; }
 
         FixedTime = Time.fixedDeltaTime;
 

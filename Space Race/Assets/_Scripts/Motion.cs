@@ -21,7 +21,7 @@ public class Motion : NetworkBehaviour
 
 	void Start () {
         CurrentSpeed = 0;
-        MaxSpeed = 30;
+        MaxSpeed = 130;
         HorizontalRot = Vector3.zero;
         VerticalRot = Vector3.zero;
 	}

@@ -9,8 +9,8 @@ public class Laps : MonoBehaviour
 	public static int currentCheckpoint = 0; 	//what checkpoint we are currently on
 	public static int currentLap = 0; 			//what lap we are currently on
 	public int Lap;								//ship's lap count
-	public Transform[] checkPointArray;			//keeps track of which checkpoint the player has passed/is going to pass
-	public static Transform[] checkpointA;		//stores the checkpoint
+	public GameObject[] checkPointArray;		//keeps track of which checkpoint the player has passed/is going to pass
+	public static GameObject[] checkpointA;		//stores the checkpoint
 	public Vector3 initPos;						//ship's starting position
 
 	void  Start ()

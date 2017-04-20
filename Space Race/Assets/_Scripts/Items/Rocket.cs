@@ -11,7 +11,7 @@ public class Rocket : NetworkBehaviour
     private GameObject Rockets;
 
 	void Start () {
-        //this.transform.rotation = Quaternion.Euler(90, 0, 0);
+        
 	}
 	
 	// Update is called once per frame
@@ -21,19 +21,23 @@ public class Rocket : NetworkBehaviour
     
     public void ActivateRocket()
     {
-        this.GetComponent<Rigidbody>().AddForce(Vector3.forward * RocketSpeed * Time.fixedDeltaTime);
+        this.transform.Translate(Vector3.forward * RocketSpeed * Time.fixedDeltaTime);
     }
     
-    void OnCollisionEnter(Collision Object)
+    void OnCollisionEnter(Collision ShipObject)
     {
-        if(Object.gameObject.CompareTag("Player"))
+        if(ShipObject.gameObject.CompareTag("Player"))
         {
             // player.stopMovement()
-            Destroy(Rockets);
-            // play explosion
+            Debug.Log("Player was attacked");
+            StartCoroutine(ShipObject.gameObject.GetComponent<Motion>().StopShip());
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<SphereCollider>().enabled = false;
+            Destroy(Rockets, 10);
         }
         else
         {
+            Debug.Log("Rocket crashed into wall");
             Destroy(Rockets);
             // play explosion
         }

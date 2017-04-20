@@ -7,11 +7,13 @@ public class Shield : NetworkBehaviour
 {
     [SerializeField]
     private float Duration;
-    private float CurrentTime;
-    private bool objectCollision;
     [SerializeField]
     private GameObject SheildObject;
-
+    [SerializeField]
+    private GameObject playerShip;
+    private float CurrentTime;
+    private bool objectCollision;
+    
     void Start()
     {
         CurrentTime = 0;
@@ -27,12 +29,11 @@ public class Shield : NetworkBehaviour
     public void ActivateShield()
     {
         CurrentTime += Time.deltaTime;
-        
-        if (CurrentTime >= Duration && !objectCollision)
+
+        if (CurrentTime > Duration && !objectCollision)
         {
             Destroy(SheildObject);
             print("Shield has been destroyed");
-            // play dissapate explosion
         }
     }
 
@@ -43,9 +44,6 @@ public class Shield : NetworkBehaviour
             DestroyObject(ItemObject, 0);
             DestroyObject(this, 0);
             objectCollision = true;
-            // play explosion
         }
     }
-
-
 }

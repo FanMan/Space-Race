@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ItemBox : MonoBehaviour
+public class ItemBox : NetworkBehaviour
 {
     [SerializeField]
     private float TurnSpeed;
@@ -28,19 +29,20 @@ public class ItemBox : MonoBehaviour
             CurrentItem = Items[Random.Range(0, Items.Count)];
             // need to create a public method in the player called RecievedItem
             ShipObject.gameObject.SendMessage("GetItem", CurrentItem);
+            StartCoroutine(DisableItem());
         }
     }
 
-    /*public GameObject getItem()
-    {
-        return CurrentItem;
-    }*/
-
-    void DisableItem()
+    public IEnumerator DisableItem()
     {
         // Disable the Mesh and Trigger only when the player passes through it
         this.GetComponent<BoxCollider>().enabled = false;
         this.GetComponent<MeshRenderer>().enabled = false;
+
+        yield return new WaitForSeconds(DisableTime);
+
+        this.GetComponent<BoxCollider>().enabled = true;
+        this.GetComponent<MeshRenderer>().enabled = true;
     }
 
     void Visual()

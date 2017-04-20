@@ -11,37 +11,43 @@ public class Motion : NetworkBehaviour
     private float TurnSpeed;        // how quickly the ship rotates
     [SerializeField]
     private float MaxSpeed;         // the maximum speed the ship can go
+    [SerializeField]
+    private float BoostTime;        // duration of boost
+    [SerializeField]
+    private float DisableTime;      // how long the ship is disabled
 
     private float CurrentSpeed;     // the current speed of the ship
     private float FixedTime;
 
     private Vector3 HorizontalRot, VerticalRot;
 
-    private bool ApplySpeed, ApplyBoost;
+    private bool ApplySpeed;        // tells whether to apply speed to the ship
 
 	void Start () {
         CurrentSpeed = 0;
-        MaxSpeed = 130;
         HorizontalRot = Vector3.zero;
         VerticalRot = Vector3.zero;
-	}
-	
+    }
+
     void FixedUpdate()
     {
         if(!isLocalPlayer) { return; }
 
         FixedTime = Time.fixedDeltaTime;
 
+        // apply speed to the spacecraft
         if(ApplySpeed)
         {
             //print("Applying speed: " + ApplySpeed);
             CurrentSpeed += Acceleration;
-            //print("Current Speed: " + CurrentSpeed);
+            
+            // if the current speed goes over the max speed, set it equal to max speed
             if (CurrentSpeed > MaxSpeed)
             {
                 CurrentSpeed = MaxSpeed;
             }
         }
+        // apply deceleration to the spacecraft
         else
         {
             CurrentSpeed -= Acceleration;
@@ -51,20 +57,13 @@ public class Motion : NetworkBehaviour
                 CurrentSpeed = 0;
             }
         }
-
+        Debug.Log("Current Speed: " + CurrentSpeed);
         // applies the speed in the forward direction
         this.transform.Translate(Vector3.forward * CurrentSpeed * FixedTime);
         // applies left/right turning
         this.transform.RotateAround(this.transform.position, HorizontalRot, TurnSpeed * FixedTime);
         // applies upward/downward turning
         this.transform.Rotate(VerticalRot, TurnSpeed * FixedTime);
-    }
-
-    void TurningControls()
-    {
-        // if no input from both vertical and horizontal input for a second
-        // level the ship to face forward
-        // else apply motion
     }
 
     public void ApplyMotion(bool move)
@@ -82,8 +81,36 @@ public class Motion : NetworkBehaviour
         VerticalRot = Vertical;
     }
 
-    public void StopShip()
+    public float GetDisableTime()
     {
-        CurrentSpeed = 0;
+        return DisableTime;
+    }
+
+    // Coroutines
+
+    public IEnumerator StopShip()
+    {
+        Debug.Log("StopShip Coroutine called");
+        gameObject.GetComponent<Controls>().enabled = false;
+        ApplySpeed = false;
+        yield return new WaitForSeconds(DisableTime);
+        Debug.Log("Ship can start moving again");
+        gameObject.GetComponent<Controls>().enabled = true;
+    }
+
+    public IEnumerator ActivateBoost()
+    {
+        // temporarily set the max speed to double
+        MaxSpeed *= 2;
+        // set the current speed to the max speed
+        CurrentSpeed = MaxSpeed;
+        Debug.Log("Boost Applied");
+
+        yield return new WaitForSeconds(BoostTime);
+
+        Debug.Log("Boost Ended");
+        // Set MaxSpeed back to normal
+        MaxSpeed = (MaxSpeed / 2);
+        CurrentSpeed = MaxSpeed;
     }
 }

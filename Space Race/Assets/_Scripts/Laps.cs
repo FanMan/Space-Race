@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
-public class Laps : MonoBehaviour 
+public class Laps : NetworkBehaviour 
 {
 	//for ships
 
@@ -15,11 +16,14 @@ public class Laps : MonoBehaviour
 
 	void  Start ()
 	{
+		if (!isLocalPlayer)
+			return;
+
 		//initial position of the ship when we start
 		initPos = transform.position;
 		//set these to 0 - this is where we start from the git-go
 		currentCheckpoint = 0;
-		currentLap = 0; 
+		currentLap = 0;
 
 	}
 

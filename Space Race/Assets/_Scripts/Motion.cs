@@ -57,7 +57,7 @@ public class Motion : NetworkBehaviour
                 CurrentSpeed = 0;
             }
         }
-        Debug.Log("Current Speed: " + CurrentSpeed);
+//        Debug.Log("Current Speed: " + CurrentSpeed);
         // applies the speed in the forward direction
         this.transform.Translate(Vector3.forward * CurrentSpeed * FixedTime);
         // applies left/right turning
@@ -90,11 +90,11 @@ public class Motion : NetworkBehaviour
 
     public IEnumerator StopShip()
     {
-        Debug.Log("StopShip Coroutine called");
+        //Debug.Log("StopShip Coroutine called");
         gameObject.GetComponent<Controls>().enabled = false;
         ApplySpeed = false;
         yield return new WaitForSeconds(DisableTime);
-        Debug.Log("Ship can start moving again");
+       // Debug.Log("Ship can start moving again");
         gameObject.GetComponent<Controls>().enabled = true;
     }
 
@@ -104,11 +104,11 @@ public class Motion : NetworkBehaviour
         MaxSpeed *= 2;
         // set the current speed to the max speed
         CurrentSpeed = MaxSpeed;
-        Debug.Log("Boost Applied");
+       // Debug.Log("Boost Applied");
 
         yield return new WaitForSeconds(BoostTime);
 
-        Debug.Log("Boost Ended");
+       // Debug.Log("Boost Ended");
         // Set MaxSpeed back to normal
         MaxSpeed = (MaxSpeed / 2);
         CurrentSpeed = MaxSpeed;

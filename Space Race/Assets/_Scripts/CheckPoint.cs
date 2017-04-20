@@ -5,8 +5,10 @@ using UnityEngine.Networking;
 public class CheckPoint : NetworkBehaviour 
 {
 	//for checkpoints
-	//public Transform[] checkPointArray;			//keeps track of which checkpoint the player has passed/is going to pass
-	//public static Transform[] checkpointA;		//stores the checkpoint
+	//public Transform[] checkPointArray;
+	//keeps track of which checkpoint the player has passed/is going to pass
+	//public static Transform[] checkpointA;
+	//stores the checkpoint
 
 	void  OnTriggerEnter (Collider other)
 	{
@@ -18,17 +20,32 @@ public class CheckPoint : NetworkBehaviour
 			return; //if not get out of here
 		}
 
-		Laps.currentCheckpoint++;
-
-		Debug.Log ("Current Checkpoint: " + Laps.currentCheckpoint);
-
-		if (Laps.currentCheckpoint + 1 < Laps.checkpointA.Length) 
+		if (Laps.currentCheckpoint + 1 < Laps.checkpointA.Length + 1) 
 		{
-			Laps.currentLap++;
-			Debug.Log ("Lap incremented");
+			if (Laps.currentCheckpoint == 0) 
+			{
+				Laps.currentLap++;
+				Debug.Log ("Lap incremented");
+				//Laps.currentCheckpoint = 0;
+				//Debug.Log ("Checkpoint reset to 0");
+
+			}
+			Laps.currentCheckpoint++;
+			Debug.Log ("Current Checkpoint: " + Laps.currentCheckpoint);
+
+		} else if (Laps.currentCheckpoint + 1 > Laps.checkpointA.Length)
 			Laps.currentCheckpoint = 0;
-			Debug.Log ("Checkpoint reset to 0");
-		}
+		else
+			Laps.currentCheckpoint = 0;
+		//Laps.currentLap++;
+
+/*
+if (Laps.currentCheckpoint + 1 > Laps.checkpointA.Length) 
+{
+Laps.currentCheckpoint = 0;
+Debug.Log ("Checkpoint reset to 0");
+}
+*/
 
 		Debug.Log ("aisdjhkad");
 

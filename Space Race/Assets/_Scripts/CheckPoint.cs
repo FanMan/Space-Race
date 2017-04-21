@@ -47,7 +47,7 @@ Debug.Log ("Checkpoint reset to 0");
 }
 */
 
-		Debug.Log ("aisdjhkad");
+		//Debug.Log ("aisdjhkad");
 
 		/*
 		//check if we hit one of the checkpoints in the array

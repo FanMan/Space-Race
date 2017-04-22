@@ -20,6 +20,7 @@ public class CheckPoint : NetworkBehaviour
 			return; //if not get out of here
 		}
 
+        /*
 		if (Laps.currentCheckpoint + 1 < Laps.checkpointA.Length + 1) 
 		{
 			if (Laps.currentCheckpoint == 0) 
@@ -38,6 +39,8 @@ public class CheckPoint : NetworkBehaviour
 		else
 			Laps.currentCheckpoint = 0;
 		//Laps.currentLap++;
+        */
+        Laps.currentLap++;
 
 /*
 if (Laps.currentCheckpoint + 1 > Laps.checkpointA.Length) 
